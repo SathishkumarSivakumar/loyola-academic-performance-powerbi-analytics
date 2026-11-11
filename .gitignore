@@ -6,6 +6,7 @@
 Thumbs.db
 generate_blueprint.ps1
 organize.ps1
+update_header.ps1
 Project/
 case_study_text.txt
 

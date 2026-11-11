@@ -1,0 +1,11 @@
+# Git ignore for Loyola Academic Performance Power BI Project
+*.tmp
+*.bak
+~$*
+.DS_Store
+Thumbs.db
+generate_blueprint.ps1
+organize.ps1
+Project/
+case_study_text.txt
+

@@ -1,0 +1,167 @@
+================================================================================
+LOYOLA COLLEGE TN - POWER QUERY (M) ETL ARCHITECTURE SCRIPTS
+AUTHOR: SATHISHKUMAR S (Power BI Developer & Business Intelligence Analyst)
+DATA PIPELINE: Star Schema Data Ingestion, Type Casting & Transformation
+================================================================================
+
+In Power BI Desktop:
+1. Click Home -> Transform Data (Power Query Editor).
+2. Click Home -> New Source -> Blank Query.
+3. Click Advanced Editor and paste the respective M expression below.
+
+--------------------------------------------------------------------------------
+TABLE 1: Dim_Students (Conformed Dimension)
+--------------------------------------------------------------------------------
+let
+    Source = Csv.Document(File.Contents("C:\Users\SATHISHKUMAR\.gemini\antigravity\scratch\loyola_tn_project\Project\Loyola_TN_CSV_Package\students.csv"), [Delimiter=",", Columns=26, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    PromoteHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    ChangeTypes = Table.TransformColumnTypes(PromoteHeaders,{
+        {"RollNo", type text},
+        {"StudentName", type text},
+        {"Gender", type text},
+        {"DOB", type date},
+        {"YearOfJoin", Int64.Type},
+        {"Program", type text},
+        {"DegreeType", type text},
+        {"Department", type text},
+        {"District", type text},
+        {"City", type text},
+        {"Category", type text},
+        {"ParentIncomeBracket", type text},
+        {"ResidenceStatus", type text},
+        {"ScholarshipFlag", type text},
+        {"Extracurricular", type text},
+        {"MentorFaculty", type text},
+        {"Phone", type text},
+        {"Email", type text},
+        {"BacklogCount", Int64.Type},
+        {"PlacementOfferFlag", type text},
+        {"Company", type text},
+        {"CTC_LPA", type number},
+        {"InternshipFlag", type text},
+        {"InternCompany", type text},
+        {"InternDuration", type text},
+        {"CGPA", type number}
+    })
+in
+    ChangeTypes
+
+--------------------------------------------------------------------------------
+TABLE 2: Dim_Subjects (Conformed Dimension)
+--------------------------------------------------------------------------------
+let
+    Source = Csv.Document(File.Contents("C:\Users\SATHISHKUMAR\.gemini\antigravity\scratch\loyola_tn_project\Project\Loyola_TN_CSV_Package\subjects.csv"), [Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    PromoteHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    ChangeTypes = Table.TransformColumnTypes(PromoteHeaders,{
+        {"SubjectCode", type text},
+        {"SubjectName", type text},
+        {"Program", type text},
+        {"DegreeType", type text},
+        {"Semester", Int64.Type},
+        {"CreditPoints", Int64.Type},
+        {"MaxMarks", Int64.Type}
+    })
+in
+    ChangeTypes
+
+--------------------------------------------------------------------------------
+TABLE 3: Dim_Exams (Conformed Dimension)
+--------------------------------------------------------------------------------
+let
+    Source = Csv.Document(File.Contents("C:\Users\SATHISHKUMAR\.gemini\antigravity\scratch\loyola_tn_project\Project\Loyola_TN_CSV_Package\exams.csv"), [Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    PromoteHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    ChangeTypes = Table.TransformColumnTypes(PromoteHeaders,{
+        {"ExamID", type text},
+        {"ExamType", type text},
+        {"Semester", Int64.Type},
+        {"ExamDate", type date},
+        {"ExamHall", type text},
+        {"Slot", type text},
+        {"Invigilator", type text}
+    })
+in
+    ChangeTypes
+
+--------------------------------------------------------------------------------
+TABLE 4: Fact_Scores (Central Fact Table - 80K Rows)
+--------------------------------------------------------------------------------
+let
+    Source = Csv.Document(File.Contents("C:\Users\SATHISHKUMAR\.gemini\antigravity\scratch\loyola_tn_project\Project\Loyola_TN_CSV_Package\scores.csv"), [Delimiter=",", Columns=17, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    PromoteHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    ChangeTypes = Table.TransformColumnTypes(PromoteHeaders,{
+        {"RollNo", type text},
+        {"Program", type text},
+        {"DegreeType", type text},
+        {"Year", Int64.Type},
+        {"Semester", Int64.Type},
+        {"SubjectCode", type text},
+        {"SubjectName", type text},
+        {"ExamType", type text},
+        {"ExamID", type text},
+        {"RawMarks", type number},
+        {"GraceMarks", type number},
+        {"FinalMarks", type number},
+        {"MaxMarks", type number},
+        {"GradeLetter", type text},
+        {"AttemptNo", Int64.Type},
+        {"ReExamDate", type date},
+        {"ExamDate", type date}
+    }),
+    AddGradePoint = Table.AddColumn(ChangeTypes, "GradePoints", each 
+        if [GradeLetter] = "O" then 10
+        else if [GradeLetter] = "A+" then 9
+        else if [GradeLetter] = "A" then 8
+        else if [GradeLetter] = "B+" then 7
+        else if [GradeLetter] = "B" then 6
+        else if [GradeLetter] = "C" then 5
+        else 0, Int64.Type)
+in
+    AddGradePoint
+
+--------------------------------------------------------------------------------
+TABLE 5: Fact_AttendanceMonthly (Monthly Logs - 192K Rows)
+--------------------------------------------------------------------------------
+let
+    Source = Csv.Document(File.Contents("C:\Users\SATHISHKUMAR\.gemini\antigravity\scratch\loyola_tn_project\Project\Loyola_TN_CSV_Package\attendance_monthly.csv"), [Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    PromoteHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    ChangeTypes = Table.TransformColumnTypes(PromoteHeaders,{
+        {"RollNo", type text},
+        {"Program", type text},
+        {"DegreeType", type text},
+        {"Semester", Int64.Type},
+        {"SubjectCode", type text},
+        {"Month", type text},
+        {"TotalClasses", Int64.Type},
+        {"Attended", Int64.Type},
+        {"Attendance%", type number},
+        {"ShortageReason", type text}
+    })
+in
+    ChangeTypes
+
+--------------------------------------------------------------------------------
+TABLE 6: Fact_ProjectViva (Viva Split - 716 Rows)
+--------------------------------------------------------------------------------
+let
+    Source = Csv.Document(File.Contents("C:\Users\SATHISHKUMAR\.gemini\antigravity\scratch\loyola_tn_project\Project\Loyola_TN_CSV_Package\viva_split.csv"), [Delimiter=",", Columns=6, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    PromoteHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    ChangeTypes = Table.TransformColumnTypes(PromoteHeaders,{
+        {"RollNo", type text},
+        {"SubjectCode", type text},
+        {"ReportScore", type number},
+        {"PresentationScore", type number},
+        {"QAScore", type number},
+        {"TotalForViva", type number}
+    })
+in
+    ChangeTypes
+
+--------------------------------------------------------------------------------
+STAR SCHEMA RELATIONSHIPS CONFIGURATION (Data Model View):
+--------------------------------------------------------------------------------
+1. Dim_Students [RollNo] (1) <----> (*) Fact_Scores [RollNo] (Single Direction)
+2. Dim_Students [RollNo] (1) <----> (*) Fact_AttendanceMonthly [RollNo] (Single Direction)
+3. Dim_Students [RollNo] (1) <----> (1) Fact_ProjectViva [RollNo] (Single Direction)
+4. Dim_Subjects [SubjectCode] (1) <----> (*) Fact_Scores [SubjectCode] (Single Direction)
+5. Dim_Subjects [SubjectCode] (1) <----> (*) Fact_AttendanceMonthly [SubjectCode] (Single Direction)
+6. Dim_Exams [ExamID] (1) <----> (*) Fact_Scores [ExamID] (Single Direction)

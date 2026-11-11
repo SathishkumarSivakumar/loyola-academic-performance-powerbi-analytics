@@ -1,0 +1,28 @@
+ExamID,ExamType,Semester,ExamDate,ExamHall,Slot,Invigilator
+EX0001,Internal Test 1,1.0,2024-10-04,H10,AN,Dr. N Harish
+EX0002,Internal Test 2,1.0,2024-04-12,H26,FN,Prof. L Divya
+EX0003,Model Exam,1.0,2024-01-21,H28,AN,Dr. N Harish
+EX0004,Semester Exam,1.0,2024-04-03,H12,AN,Dr. G Murugan
+EX0005,Internal Test 1,2.0,2024-01-29,H5,FN,Prof. V Lakshmi
+EX0006,Internal Test 2,2.0,2024-05-16,H10,FN,Dr. G Murugan
+EX0007,Model Exam,2.0,2024-06-06,H2,FN,Prof. V Lakshmi
+EX0008,Semester Exam,2.0,2024-06-08,H19,AN,Dr. G Murugan
+EX0009,Internal Test 1,3.0,2024-10-27,H13,FN,Prof. L Divya
+EX0010,Internal Test 2,3.0,2024-05-11,H27,FN,Dr. P Aravind
+EX0011,Model Exam,3.0,2024-09-20,H5,AN,Prof. R Meenakshi
+EX0012,Semester Exam,3.0,2024-08-28,H14,FN,Dr. P Aravind
+EX0013,Internal Test 1,4.0,2024-09-17,H14,AN,Prof. L Divya
+EX0014,Internal Test 2,4.0,2024-06-05,H6,AN,Dr. G Murugan
+EX0015,Model Exam,4.0,2024-04-16,H21,FN,Dr. N Harish
+EX0016,Semester Exam,4.0,2024-04-19,H21,AN,Prof. V Lakshmi
+EX0017,Internal Test 1,5.0,2024-10-28,H1,FN,Dr. N Harish
+EX0018,Internal Test 2,5.0,2024-09-12,H10,AN,Prof. L Divya
+EX0019,Model Exam,5.0,2024-12-19,H15,AN,Prof. L Divya
+EX0020,Semester Exam,5.0,2024-06-02,H10,FN,Dr. N Harish
+EX0021,Internal Test 1,6.0,2024-03-07,H28,AN,Dr. S Kumar
+EX0022,Internal Test 2,6.0,2024-11-09,H3,FN,Dr. S Kumar
+EX0023,Model Exam,6.0,2024-07-17,H18,FN,Dr. G Murugan
+EX0024,Semester Exam,6.0,2024-05-07,H2,AN,Prof. V Lakshmi
+EXA01,Arrear_Attempt_1,,2025-06-03,H1,AN,Prof. V Lakshmi
+EXA02,Arrear_Attempt_2,,2025-01-17,H4,FN,Prof. L Divya
+EXA03,Arrear_Attempt_3,,2025-01-31,H15,AN,Prof. V Lakshmi

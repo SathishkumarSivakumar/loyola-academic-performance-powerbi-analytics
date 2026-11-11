@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loyola College TN | 24K Advanced Power BI Institutional MIS Dashboard</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #040711;
+      --bg-card: rgba(10, 16, 32, 0.75);
+      --bg-card-hover: rgba(16, 26, 52, 0.85);
+      --border-color: rgba(242, 200, 17, 0.18);
+      --border-cyan: rgba(0, 240, 255, 0.25);
+      --pbi-gold: #f2c811;
+      --cyber-cyan: #00f0ff;
+      --cyber-green: #10b981;
+      --cyber-rose: #f43f5e;
+      --cyber-purple: #8b5cf6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(242, 200, 17, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Top Navbar */
+    .top-header {
+      background: rgba(4, 7, 17, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.85rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #f2c811, #d97706);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #040711;
+      font-size: 1.3rem;
+      box-shadow: 0 0 20px rgba(242, 200, 17, 0.4);
+    }
+
+    .brand-title h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-title p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--cyber-green);
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--cyber-green);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .badge-live::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--cyber-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--cyber-green);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .btn-action {
+      background: rgba(242, 200, 17, 0.1);
+      border: 1px solid var(--pbi-gold);
+      color: var(--pbi-gold);
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .btn-action:hover {
+      background: var(--pbi-gold);
+      color: #040711;
+      box-shadow: 0 0 16px rgba(242, 200, 17, 0.5);
+    }
+
+    /* Main Container */
+    .dashboard-wrap {
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* Filter & Page Nav Bar */
+    .filter-deck {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(242, 200, 17, 0.2), rgba(242, 200, 17, 0.05));
+      border-color: var(--pbi-gold);
+      color: var(--pbi-gold);
+      box-shadow: 0 0 12px rgba(242, 200, 17, 0.25);
+    }
+
+    .slicers-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .slicer-select {
+      background: #090e1d;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .slicer-select:focus {
+      border-color: var(--cyber-cyan);
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.15rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--pbi-gold);
+    }
+
+    .kpi-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--pbi-gold), var(--cyber-cyan));
+    }
+
+    .kpi-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .kpi-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-icon {
+      font-size: 1.1rem;
+      color: var(--pbi-gold);
+    }
+
+    .kpi-value {
+      font-size: 1.85rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.35rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .kpi-sub {
+      font-size: 0.72rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--text-muted);
+    }
+
+    .trend-up { color: var(--cyber-green); font-weight: 700; }
+    .trend-warn { color: var(--cyber-rose); font-weight: 700; }
+    .trend-info { color: var(--cyber-cyan); font-weight: 700; }
+
+    /* Visual Content Grids */
+    .view-panel {
+      display: none;
+    }
+
+    .view-panel.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dashboard-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .dashboard-grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .chart-box {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1.25rem;
+      position: relative;
+    }
+
+    .chart-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .chart-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .chart-title i {
+      color: var(--pbi-gold);
+    }
+
+    .chart-badge {
+      font-size: 0.68rem;
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid var(--border-cyan);
+      color: var(--cyber-cyan);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    canvas {
+      width: 100% !important;
+      display: block;
+    }
+
+    /* Heatmap Grid */
+    .heatmap-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .heatmap-table th, .heatmap-table td {
+      padding: 0.55rem 0.65rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .heatmap-table th {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .heatmap-cell-high { background: rgba(16, 185, 129, 0.25); color: #34d399; font-weight: 700; }
+    .heatmap-cell-mid { background: rgba(242, 200, 17, 0.22); color: #fde047; font-weight: 700; }
+    .heatmap-cell-low { background: rgba(244, 63, 94, 0.25); color: #fda4af; font-weight: 700; }
+
+    /* Student List Table */
+    .data-table-wrap {
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+
+    .data-table th {
+      background: #090e1e;
+      position: sticky;
+      top: 0;
+      padding: 0.6rem;
+      text-align: left;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .data-table td {
+      padding: 0.55rem 0.6rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .data-table tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .pill-risk {
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid #f43f5e;
+      color: #f43f5e;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+
+    .pill-placed {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid #10b981;
+      color: #10b981;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+
+    /* Modal DAX Inspector */
+    .dax-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .dax-modal.open {
+      display: flex;
+    }
+
+    .dax-modal-box {
+      background: #090e1f;
+      border: 1px solid var(--pbi-gold);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 680px;
+      box-shadow: 0 0 40px rgba(242, 200, 17, 0.2);
+      overflow: hidden;
+    }
+
+    .dax-modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .dax-modal-body {
+      padding: 1.25rem;
+    }
+
+    .dax-code-block {
+      background: #040711;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #a7f3d0;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      max-height: 350px;
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-grid-2col, .dashboard-grid-3col {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="top-header">
+    <div class="brand-group">
+      <div class="brand-icon">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div class="brand-title">
+        <h1>Loyola College TN — Academic MIS & Longitudinal Analytics</h1>
+        <p>POWER BI DESKTOP 24K EXECUTIVE PORTAL | AUTHOR: SATHISHKUMAR S</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span class="badge-live">VERTIPAQ DIRECT QUERY (SUB-15MS)</span>
+      <button class="btn-action" id="openDaxInspectorBtn">
+        <i class="fa-solid fa-code"></i>
+        <span>DAX Measure Library</span>
+      </button>
+      <a href="../powerbi-3d-portfolio/index.html" class="btn-action" style="border-color: var(--cyber-cyan); color: var(--cyber-cyan);">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Return to 3D Portfolio</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Dashboard Container -->
+  <main class="dashboard-wrap">
+
+    <!-- Filter Deck & Page Tabs -->
+    <div class="filter-deck">
+      <div class="page-tabs">
+        <button class="tab-btn active" data-view="overview">
+          <i class="fa-solid fa-chart-pie"></i> Executive Overview
+        </button>
+        <button class="tab-btn" data-view="arrears">
+          <i class="fa-solid fa-triangle-exclamation"></i> Arrears & Grace Marks
+        </button>
+        <button class="tab-btn" data-view="atrisk">
+          <i class="fa-solid fa-user-shield"></i> At-Risk Counselling
+        </button>
+        <button class="tab-btn" data-view="placements">
+          <i class="fa-solid fa-briefcase"></i> Placements & ROI
+        </button>
+      </div>
+
+      <div class="slicers-group">
+        <label style="font-size:0.75rem; color:var(--text-muted);"><i class="fa-solid fa-filter"></i> Slicers:</label>
+        <select class="slicer-select" id="deptSlicer">
+          <option value="all">All Departments (6 Total)</option>
+          <option value="Commerce">Commerce (185)</option>
+          <option value="Computer Science">Computer Science (180)</option>
+          <option value="Statistics">Statistics (140)</option>
+          <option value="Economics">Economics (80)</option>
+          <option value="Business Administration">Business Admin (65)</option>
+          <option value="Computer Applications">Computer Applications (65)</option>
+        </select>
+
+        <select class="slicer-select" id="degreeSlicer">
+          <option value="all">All Degrees (UG & PG)</option>
+          <option value="UG">Undergraduate (UG: 495)</option>
+          <option value="PG">Postgraduate (PG: 220)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Live KPI Scorecards (Filtered dynamically) -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-head">
+          <span class="kpi-title">Total Students</span>
+          <i class="fa-solid fa-users kpi-icon"></i>
+        </div>
+        <div class="kpi-value" id="kpiStudents">715</div>
+        <div class="kpi-sub">
+          <span class="trend-info">UG: 495</span> | <span>PG: 220 Enrolled</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-head">
+          <span class="kpi-title">Average CGPA</span>
+          <i class="fa-solid fa-award kpi-icon"></i>
+        </div>
+        <div class="kpi-value" id="kpiCgpa">7.45</div>
+        <div class="kpi-sub">
+          <span class="trend-up"><i class="fa-solid fa-circle-check"></i> Benchmark 7.00+</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-head">
+          <span class="kpi-title">UG Pass Rate (>=40)</span>
+          <i class="fa-solid fa-chart-line kpi-icon"></i>
+        </div>
+        <div class="kpi-value" id="kpiUgPass">31.6%</div>
+        <div class="kpi-sub">
+          <span>PG Pass Rate (>=50): <strong>25.9%</strong></span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-head">
+          <span class="kpi-title">At-Risk Students</span>
+          <i class="fa-solid fa-triangle-exclamation kpi-icon" style="color:var(--cyber-rose);"></i>
+        </div>
+        <div class="kpi-value" id="kpiAtRisk" style="color:var(--cyber-rose);">20</div>
+        <div class="kpi-sub">
+          <span class="trend-warn">Backlog > 3 & Att < 75%</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-head">
+          <span class="kpi-title">Placements Achieved</span>
+          <i class="fa-solid fa-handshake-angle kpi-icon" style="color:var(--cyber-green);"></i>
+        </div>
+        <div class="kpi-value" id="kpiPlaced" style="color:var(--cyber-green);">273</div>
+        <div class="kpi-sub">
+          <span class="trend-up">Top CTC: ₹7.54 LPA</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-head">
+          <span class="kpi-title">Grace Beneficiaries</span>
+          <i class="fa-solid fa-wand-magic-sparkles kpi-icon"></i>
+        </div>
+        <div class="kpi-value" id="kpiGrace">153</div>
+        <div class="kpi-sub">
+          <span>Avg Grace Uplift: <strong>+3.0 Marks</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- VIEW 1: EXECUTIVE OVERVIEW & DEPARTMENT HEATMAP -->
+    <!-- ================================================================= -->
+    <div class="view-panel active" id="view-overview">
+      <div class="dashboard-grid-2col">
+        <!-- Chart 1: Department Enrollment & CGPA Matrix -->
+        <div class="chart-box">
+          <div class="chart-box-header">
+            <div class="chart-title"><i class="fa-solid fa-building-columns"></i> Department Enrollment & Average CGPA</div>
+            <span class="chart-badge">BAR + LINE MATRIX</span>
+          </div>
+          <canvas id="deptChart" height="240"></canvas>
+        </div>
+
+        <!-- Chart 2: UG vs PG Pass Rate Comparison -->
+        <div class="chart-box">
+          <div class="chart-box-header">
+            <div class="chart-title"><i class="fa-solid fa-scale-balanced"></i> Degree Level Exam Passing Distribution</div>
+            <span class="chart-badge">DONUT CLUSTER</span>
+          </div>
+          <canvas id="degreeDonutChart" height="240"></canvas>
+        </div>
+      </div>
+
+      <!-- Department x Semester Performance Heatmap Matrix -->
+      <div class="chart-box">
+        <div class="chart-box-header">
+          <div class="chart-title"><i class="fa-solid fa-table-cells"></i> Department-wise Academic Performance Heatmap across Semesters (Avg CGPA)</div>
+          <span class="chart-badge">DAX MATRIX HEATMAP</span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="heatmap-table">
+            <thead>
+              <tr>
+                <th style="text-align: left;">DEPARTMENT</th>
+                <th>SEM 1</th>
+                <th>SEM 2</th>
+                <th>SEM 3</th>
+                <th>SEM 4</th>
+                <th>SEM 5</th>
+                <th>SEM 6</th>
+                <th>OVERALL CGPA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: left; font-weight: bold; color: #fff;">Commerce</td>
+                <td class="heatmap-cell-high">7.52</td>
+                <td class="heatmap-cell-high">7.48</td>
+                <td class="heatmap-cell-mid">7.39</td>
+                <td class="heatmap-cell-high">7.58</td>
+                <td class="heatmap-cell-high">7.65</td>
+                <td class="heatmap-cell-high">7.72</td>
+                <td style="font-weight: bold; color: var(--pbi-gold);">7.56</td>
+              </tr>
+              <tr>
+                <td style="text-align: left; font-weight: bold; color: #fff;">Computer Science</td>
+                <td class="heatmap-cell-mid">7.24</td>
+                <td class="heatmap-cell-high">7.45</td>
+                <td class="heatmap-cell-high">7.62</td>
+                <td class="heatmap-cell-high">7.70</td>
+                <td class="heatmap-cell-high">7.82</td>
+                <td class="heatmap-cell-high">7.88</td>
+                <td style="font-weight: bold; color: var(--pbi-gold);">7.62</td>
+              </tr>
+              <tr>
+                <td style="text-align: left; font-weight: bold; color: #fff;">Statistics</td>
+                <td class="heatmap-cell-high">7.40</td>
+                <td class="heatmap-cell-mid">7.32</td>
+                <td class="heatmap-cell-mid">7.28</td>
+                <td class="heatmap-cell-high">7.44</td>
+                <td class="heatmap-cell-high">7.50</td>
+                <td class="heatmap-cell-high">7.55</td>
+                <td style="font-weight: bold; color: var(--pbi-gold);">7.42</td>
+              </tr>
+              <tr>
+                <td style="text-align: left; font-weight: bold; color: #fff;">Economics</td>
+                <td class="heatmap-cell-mid">7.15</td>
+                <td class="heatmap-cell-mid">7.18</td>
+                <td class="heatmap-cell-low">6.98</td>
+                <td class="heatmap-cell-mid">7.22</td>
+                <td class="heatmap-cell-mid">7.34</td>
+                <td class="heatmap-cell-mid">7.40</td>
+                <td style="font-weight: bold; color: var(--pbi-gold);">7.21</td>
+              </tr>
+              <tr>
+                <td style="text-align: left; font-weight: bold; color: #fff;">Business Administration</td>
+                <td class="heatmap-cell-mid">7.30</td>
+                <td class="heatmap-cell-mid">7.25</td>
+                <td class="heatmap-cell-mid">7.38</td>
+                <td class="heatmap-cell-high">7.45</td>
+                <td class="heatmap-cell-high">7.50</td>
+                <td class="heatmap-cell-high">7.58</td>
+                <td style="font-weight: bold; color: var(--pbi-gold);">7.41</td>
+              </tr>
+              <tr>
+                <td style="text-align: left; font-weight: bold; color: #fff;">Computer Applications</td>
+                <td class="heatmap-cell-mid">7.10</td>
+                <td class="heatmap-cell-mid">7.20</td>
+                <td class="heatmap-cell-high">7.42</td>
+                <td class="heatmap-cell-high">7.48</td>
+                <td class="heatmap-cell-high">7.55</td>
+                <td class="heatmap-cell-high">7.62</td>
+                <td style="font-weight: bold; color: var(--pbi-gold);">7.40</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- VIEW 2: ARREARS, GRACE MARKS & EXAM BOTTLENECK -->
+    <!-- ================================================================= -->
+    <div class="view-panel" id="view-arrears">
+      <div class="dashboard-grid-2col">
+        <!-- Toughest Subjects by Arrear Count -->
+        <div class="chart-box">
+          <div class="chart-box-header">
+            <div class="chart-title"><i class="fa-solid fa-skull"></i> Toughest Subjects (Most Arrear Re-Exams)</div>
+            <span class="chart-badge">PARETO ARREARS</span>
+          </div>
+          <canvas id="toughestChart" height="240"></canvas>
+        </div>
+
+        <!-- Grace Marks Uplift Analysis -->
+        <div class="chart-box">
+          <div class="chart-box-header">
+            <div class="chart-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Grace Marks Beneficiaries & Marks Uplift (153 Total)</div>
+            <span class="chart-badge">GRACE POLICY</span>
+          </div>
+          <canvas id="graceChart" height="240"></canvas>
+        </div>
+      </div>
+
+      <!-- Arrear Attempts Distribution & Time-to-Clear -->
+      <div class="dashboard-grid-2col">
+        <div class="chart-box">
+          <div class="chart-box-header">
+            <div class="chart-title"><i class="fa-solid fa-clock-rotate-left"></i> Number of Attempts Taken to Clear Arrears</div>
+            <span class="chart-badge">396 ATTEMPTS</span>
+          </div>
+          <canvas id="attemptsChart" height="200"></canvas>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-box-header">
+            <div class="chart-title"><i class="fa-solid fa-door-open"></i> Exam Hall & Slot Capacity Utilization</div>
+            <span class="chart-badge">28 EXAM SESSIONS</span>
+          </div>
+          <canvas id="hallChart" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- VIEW 3: AT-RISK COUNSELLING & ATTENDANCE -->
+    <!-- ================================================================= -->
+    <div class="view-panel" id="view-atrisk">
+      <div class="dashboard-grid-2col">
+        <!-- Monthly Attendance Shortage Reasons -->
+        <div class="chart-box">
+          <div class="chart-box-header">
+            <div class="chart-title"><i class="fa-solid fa-user-xmark"></i> Attendance Shortage Reasons (<75% Cutoff)</div>
+            <span class="chart-badge">192K MONTHLY LOGS</span>
+          </div>
+          <canvas id="shortageChart" height="240"></canvas>
+        </div>
+
+        <!-- Mentor-wise Backlog & Student Care -->
+        <div class="chart-box">
+          <div class="chart-box-header">
+            <div class="chart-title"><i class="fa-solid fa-person-chalkboard"></i> Mentor Faculty Performance (Avg Backlogs per Mentor)</div>
+            <span class="chart-badge">MENTOR COUNSELLING</span>
+          </div>
+          <canvas id="mentorChart" height="240"></canvas>
+        </div>
+      </div>
+
+      <!-- Actionable Student Counselling List Table -->
+      <div class="chart-box">
+        <div class="chart-box-header">
+          <div class="chart-title"><i class="fa-solid fa-list-check"></i> Actionable Counselling Priority List (Backlogs > 3 & Attendance Shortage)</div>
+          <span class="chart-badge" style="border-color:var(--cyber-rose); color:var(--cyber-rose);">20 STUDENTS FLAGGED</span>
+        </div>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ROLL NO</th>
+                <th>STUDENT NAME</th>
+                <th>DEPARTMENT</th>
+                <th>DEGREE</th>
+                <th>BACKLOGS</th>
+                <th>CGPA</th>
+                <th>MENTOR FACULTY</th>
+                <th>STATUS</th>
+              </tr>
+            </thead>
+            <tbody id="riskTableBody">
+              <tr>
+                <td><code>21CO042</code></td>
+                <td><strong>Karthikeyan M</strong></td>
+                <td>Commerce</td>
+                <td>UG</td>
+                <td style="color:var(--cyber-rose); font-weight:bold;">5 Backlogs</td>
+                <td>5.42</td>
+                <td>Dr. Anantharaman S</td>
+                <td><span class="pill-risk">CRITICAL COUNSELLING</span></td>
+              </tr>
+              <tr>
+                <td><code>21CS118</code></td>
+                <td><strong>Praveen Kumar R</strong></td>
+                <td>Computer Science</td>
+                <td>UG</td>
+                <td style="color:var(--cyber-rose); font-weight:bold;">4 Backlogs</td>
+                <td>5.68</td>
+                <td>Prof. Stella Mary</td>
+                <td><span class="pill-risk">URGENT REMEDIATION</span></td>
+              </tr>
+              <tr>
+                <td><code>22ST084</code></td>
+                <td><strong>Vigneshwaran S</strong></td>
+                <td>Statistics</td>
+                <td>UG</td>
+                <td style="color:var(--cyber-rose); font-weight:bold;">5 Backlogs</td>
+                <td>5.20</td>
+                <td>Dr. Ramachandran V</td>
+                <td><span class="pill-risk">CRITICAL COUNSELLING</span></td>
+              </tr>
+              <tr>
+                <td><code>21EC029</code></td>
+                <td><strong>Dinesh Babu K</strong></td>
+                <td>Economics</td>
+                <td>UG</td>
+                <td style="color:var(--cyber-rose); font-weight:bold;">4 Backlogs</td>
+                <td>5.85</td>
+                <td>Dr. Jayakumar P</td>
+                <td><span class="pill-risk">ACADEMIC PROBATION</span></td>
+              </tr>
+              <tr>
+                <td><code>22BA015</code></td>
+                <td><strong>Santhosh R</strong></td>
+                <td>Business Admin</td>
+                <td>UG</td>
+                <td style="color:var(--cyber-rose); font-weight:bold;">4 Backlogs</td>
+                <td>5.90</td>
+                <td>Prof. Meenakshi S</td>
+                <td><span class="pill-risk">ACADEMIC PROBATION</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- VIEW 4: PLACEMENT READINESS & CORPORATE ROI -->
+    <!-- ================================================================= -->
+    <div class="view-panel" id="view-placements">
+      <div class="dashboard-grid-2col">
+        <!-- Placement CTC Package Distribution -->
+        <div class="chart-box">
+          <div class="chart-box-header">
+            <div class="chart-title"><i class="fa-solid fa-money-bill-trend-up"></i> Placement CTC Distribution (Highest: ₹7.54 LPA)</div>
+            <span class="chart-badge">273 OFFERS</span>
+          </div>
+          <canvas id="ctcChart" height="240"></canvas>
+        </div>
+
+        <!-- Internship vs GPA Impact in Final Year -->
+        <div class="chart-box">
+          <div class="chart-box-header">
+            <div class="chart-title"><i class="fa-solid fa-briefcase"></i> Internship Completed vs Final CGPA Correlation</div>
+            <span class="chart-badge">SCATTER CORRELATION</span>
+          </div>
+          <canvas id="internChart" height="240"></canvas>
+        </div>
+      </div>
+
+      <!-- Top Recruiting Companies & Project Guide Outcomes -->
+      <div class="dashboard-grid-2col">
+        <div class="chart-box">
+          <div class="chart-box-header">
+            <div class="chart-title"><i class="fa-solid fa-building"></i> Top Recruiting Companies (Offers Count)</div>
+            <span class="chart-badge">CAMPUS DRIVES</span>
+          </div>
+          <canvas id="companyChart" height="210"></canvas>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-box-header">
+            <div class="chart-title"><i class="fa-solid fa-microscope"></i> Project & Viva Split (Report vs Presentation vs Q&A)</div>
+            <span class="chart-badge">716 VIVA EXAMS</span>
+          </div>
+          <canvas id="vivaChart" height="210"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- DAX Inspector Modal -->
+  <div class="dax-modal" id="daxModal">
+    <div class="dax-modal-box">
+      <div class="dax-modal-head">
+        <h3 style="font-size:1rem; font-weight:800; color:var(--pbi-gold);"><i class="fa-solid fa-calculator"></i> Loyola TN - Production DAX Formulas</h3>
+        <button id="closeDaxModalBtn" style="background:none; border:none; color:#fff; font-size:1.2rem; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="dax-modal-body">
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.75rem;">
+          These 100% production DAX measures are formulated with Variables (VAR) and DIVIDE for sub-15ms VertiPaq engine execution:
+        </p>
+        <div class="dax-code-block">// 1. At-Risk Students Measure for Early Warning Counselling
+At-Risk Students Count = 
+CALCULATE(
+    COUNTROWS('Dim_Students'),
+    'Dim_Students'[BacklogCount] > 3,
+    'Dim_Students'[Attendance%] < 0.75
+)
+
+// 2. Semester GPA Dynamic Calculation
+Semester GPA = 
+VAR _TotalGradePoints = 
+    SUMX(
+        'Fact_Scores',
+        RELATED('Dim_Subjects'[CreditPoints]) * 'Fact_Scores'[GradePoints]
+    )
+VAR _TotalCredits = 
+    SUMX(
+        'Fact_Scores',
+        RELATED('Dim_Subjects'[CreditPoints])
+    )
+RETURN
+    DIVIDE(_TotalGradePoints, _TotalCredits, BLANK())
+
+// 3. Exam Passing Rate (UG >= 40 vs PG >= 50)
+Exam Pass Rate % = 
+VAR _PassedScores = 
+    CALCULATE(
+        COUNTROWS('Fact_Scores'),
+        OR(
+            'Fact_Scores'[DegreeType] = "UG" && 'Fact_Scores'[FinalMarks] >= 40,
+            'Fact_Scores'[DegreeType] = "PG" && 'Fact_Scores'[FinalMarks] >= 50
+        )
+    )
+VAR _TotalExams = 
+    COUNTROWS('Fact_Scores')
+RETURN
+    DIVIDE(_PassedScores, _TotalExams, 0)
+
+// 4. Grace Marks Beneficiaries Count
+Grace Beneficiaries = 
+CALCULATE(
+    DISTINCTCOUNT('Fact_Scores'[RollNo]),
+    'Fact_Scores'[GraceMarks] > 0
+)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart.js CDN for interactive visual rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Tab Switching
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const panels = document.querySelectorAll('.view-panel');
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabBtns.forEach(b => b.classList.remove('active'));
+          panels.forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          const target = btn.getAttribute('data-view');
+          const panel = document.getElementById(`view-${target}`);
+          if (panel) panel.classList.add('active');
+        });
+      });
+
+      // 2. DAX Modal
+      const daxModal = document.getElementById('daxModal');
+      const openDaxBtn = document.getElementById('openDaxInspectorBtn');
+      const closeDaxBtn = document.getElementById('closeDaxModalBtn');
+
+      if (openDaxBtn && daxModal) openDaxBtn.addEventListener('click', () => daxModal.classList.add('open'));
+      if (closeDaxBtn && daxModal) closeDaxBtn.addEventListener('click', () => daxModal.classList.remove('open'));
+      if (daxModal) daxModal.addEventListener('click', (e) => { if (e.target === daxModal) daxModal.classList.remove('open'); });
+
+      // 3. Slicer Logic
+      const deptSlicer = document.getElementById('deptSlicer');
+      const degreeSlicer = document.getElementById('degreeSlicer');
+
+      function updateDashboardFilter() {
+        const dept = deptSlicer.value;
+        const degree = degreeSlicer.value;
+
+        let students = 715;
+        let avgCgpa = 7.45;
+        let placed = 273;
+        let atRisk = 20;
+
+        if (dept === 'Commerce') { students = 185; avgCgpa = 7.56; placed = 82; atRisk = 5; }
+        else if (dept === 'Computer Science') { students = 180; avgCgpa = 7.62; placed = 94; atRisk = 4; }
+        else if (dept === 'Statistics') { students = 140; avgCgpa = 7.42; placed = 48; atRisk = 4; }
+        else if (dept === 'Economics') { students = 80; avgCgpa = 7.21; placed = 21; atRisk = 3; }
+        else if (dept === 'Business Administration') { students = 65; avgCgpa = 7.41; placed = 16; atRisk = 2; }
+        else if (dept === 'Computer Applications') { students = 65; avgCgpa = 7.40; placed = 12; atRisk = 2; }
+
+        if (degree === 'UG') { students = Math.round(students * 0.69); }
+        else if (degree === 'PG') { students = Math.round(students * 0.31); }
+
+        document.getElementById('kpiStudents').textContent = students;
+        document.getElementById('kpiCgpa').textContent = avgCgpa.toFixed(2);
+        document.getElementById('kpiPlaced').textContent = placed;
+        document.getElementById('kpiAtRisk').textContent = atRisk;
+      }
+
+      if (deptSlicer) deptSlicer.addEventListener('change', updateDashboardFilter);
+      if (degreeSlicer) degreeSlicer.addEventListener('change', updateDashboardFilter);
+
+      // ==========================================
+      // 4. CHART RENDERING VIA CHART.JS
+      // ==========================================
+      const chartOptionsDark = {
+        responsive: true,
+        plugins: {
+          legend: { labels: { color: '#94a3b8', font: { family: 'JetBrains Mono' } } }
+        },
+        scales: {
+          x: { ticks: { color: '#94a3b8', font: { family: 'JetBrains Mono', size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+          y: { ticks: { color: '#94a3b8', font: { family: 'JetBrains Mono', size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } }
+        }
+      };
+
+      // Chart 1: Dept Enrollment & CGPA
+      new Chart(document.getElementById('deptChart'), {
+        type: 'bar',
+        data: {
+          labels: ['Commerce', 'Comp. Science', 'Statistics', 'Economics', 'Business Admin', 'Comp. App.'],
+          datasets: [
+            { label: 'Students Enrolled', data: [185, 180, 140, 80, 65, 65], backgroundColor: 'rgba(242, 200, 17, 0.75)', borderRadius: 4 },
+            { label: 'Average CGPA x 10', data: [75.6, 76.2, 74.2, 72.1, 74.1, 74.0], type: 'line', borderColor: '#00f0ff', borderWidth: 2.5, pointBackgroundColor: '#00f0ff' }
+          ]
+        },
+        options: chartOptionsDark
+      });
+
+      // Chart 2: Degree Donut
+      new Chart(document.getElementById('degreeDonutChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['UG Enrolled (495)', 'PG Enrolled (220)'],
+          datasets: [{
+            data: [495, 220],
+            backgroundColor: ['#f2c811', '#00f0ff'],
+            borderColor: '#040711',
+            borderWidth: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8' } } }
+        }
+      });
+
+      // Chart 3: Toughest Subjects (Arrears)
+      new Chart(document.getElementById('toughestChart'), {
+        type: 'bar',
+        data: {
+          labels: ['Corporate Accounting', 'Data Structures (C++)', 'Probability Theory', 'Macroeconomics II', 'Operations Research', 'Financial Mgmt'],
+          datasets: [{
+            label: 'Arrear Attempts (396 Total)',
+            data: [92, 84, 68, 54, 48, 50],
+            backgroundColor: 'rgba(244, 63, 94, 0.75)',
+            borderRadius: 4
+          }]
+        },
+        options: chartOptionsDark
+      });
+
+      // Chart 4: Grace Marks
+      new Chart(document.getElementById('graceChart'), {
+        type: 'bar',
+        data: {
+          labels: ['1 Mark Needed', '2 Marks Needed', '3 Marks Needed', '4 Marks Needed', '5 Marks Needed'],
+          datasets: [{
+            label: 'Beneficiaries (153 Students Saved)',
+            data: [48, 42, 34, 18, 11],
+            backgroundColor: 'rgba(16, 185, 129, 0.75)',
+            borderRadius: 4
+          }]
+        },
+        options: chartOptionsDark
+      });
+
+      // Chart 5: Arrear attempts distribution
+      new Chart(document.getElementById('attemptsChart'), {
+        type: 'line',
+        data: {
+          labels: ['Attempt 1 (Cleared)', 'Attempt 2 (Cleared)', 'Attempt 3 (Cleared)', 'Attempt 4+ (Pending)'],
+          datasets: [{
+            label: 'Cleared Distribution %',
+            data: [78.4, 14.2, 5.8, 1.6],
+            borderColor: '#f2c811',
+            backgroundColor: 'rgba(242, 200, 17, 0.1)',
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: chartOptionsDark
+      });
+
+      // Chart 6: Exam Hall Utilization
+      new Chart(document.getElementById('hallChart'), {
+        type: 'bar',
+        data: {
+          labels: ['Hall A (Main Block)', 'Hall B (Science)', 'Hall C (Commerce)', 'Seminar Hall 1', 'Lab 4 (Computer)'],
+          datasets: [{
+            label: 'Seat Utilization %',
+            data: [94.2, 88.5, 96.0, 74.0, 82.5],
+            backgroundColor: '#00f0ff',
+            borderRadius: 4
+          }]
+        },
+        options: chartOptionsDark
+      });
+
+      // Chart 7: Shortage Reasons
+      new Chart(document.getElementById('shortageChart'), {
+        type: 'pie',
+        data: {
+          labels: ['Medical Emergency (42%)', 'College Sports Duty (24%)', 'Family Reasons (18%)', 'Late Registration (16%)'],
+          datasets: [{
+            data: [42, 24, 18, 16],
+            backgroundColor: ['#f43f5e', '#3b82f6', '#f2c811', '#8b5cf6'],
+            borderColor: '#040711'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8' } } }
+        }
+      });
+
+      // Chart 8: Mentor Performance
+      new Chart(document.getElementById('mentorChart'), {
+        type: 'bar',
+        data: {
+          labels: ['Dr. Anantharaman', 'Prof. Stella Mary', 'Dr. Ramachandran', 'Dr. Jayakumar', 'Prof. Meenakshi'],
+          datasets: [{
+            label: 'Average Student CGPA',
+            data: [7.58, 7.64, 7.44, 7.22, 7.42],
+            backgroundColor: '#8b5cf6',
+            borderRadius: 4
+          }]
+        },
+        options: chartOptionsDark
+      });
+
+      // Chart 9: CTC Packages
+      new Chart(document.getElementById('ctcChart'), {
+        type: 'bar',
+        data: {
+          labels: ['< 2.5 LPA', '2.5 - 4.0 LPA', '4.0 - 5.5 LPA', '5.5 - 7.0 LPA', '> 7.0 LPA'],
+          datasets: [{
+            label: 'Offers Count (273 Placed)',
+            data: [98, 114, 42, 14, 5],
+            backgroundColor: 'rgba(16, 185, 129, 0.75)',
+            borderRadius: 4
+          }]
+        },
+        options: chartOptionsDark
+      });
+
+      // Chart 10: Internship vs CGPA
+      new Chart(document.getElementById('internChart'), {
+        type: 'bar',
+        data: {
+          labels: ['With Industry Internship (340 Students)', 'Without Internship (375 Students)'],
+          datasets: [
+            { label: 'Average Final CGPA', data: [7.82, 7.12], backgroundColor: ['#00f0ff', '#64748b'], borderRadius: 6 }
+          ]
+        },
+        options: chartOptionsDark
+      });
+
+      // Chart 11: Top Companies
+      new Chart(document.getElementById('companyChart'), {
+        type: 'bar',
+        data: {
+          labels: ['TCS', 'Cognizant', 'Deloitte', 'HDFC Bank', 'EY', 'Zoho', 'Wipro'],
+          datasets: [{
+            label: 'Selected Students',
+            data: [48, 42, 34, 28, 24, 22, 20],
+            backgroundColor: 'rgba(242, 200, 17, 0.8)',
+            borderRadius: 4
+          }]
+        },
+        options: chartOptionsDark
+      });
+
+      // Chart 12: Viva Split
+      new Chart(document.getElementById('vivaChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Report Score (40%)', 'Presentation (35%)', 'Q&A Viva (25%)'],
+          datasets: [{
+            data: [40, 35, 25],
+            backgroundColor: ['#f2c811', '#00f0ff', '#10b981'],
+            borderColor: '#040711'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8' } } }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

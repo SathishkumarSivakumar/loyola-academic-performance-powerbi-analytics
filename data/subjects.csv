@@ -1,0 +1,237 @@
+SubjectCode,SubjectName,Program,DegreeType,Semester,CreditPoints,MaxMarks
+S9000,Financial Accounting,B.Com,UG,1,4,100
+S9001,Business Economics,B.Com,UG,1,4,100
+S9002,Business Mathematics,B.Com,UG,1,3,100
+S9003,Business Communication,B.Com,UG,1,4,100
+S9004,Environmental Studies,B.Com,UG,1,3,100
+S9005,Cost Accounting,B.Com,UG,2,4,100
+S9006,Corporate Law,B.Com,UG,2,3,100
+S9007,Statistics for Business,B.Com,UG,2,4,100
+S9008,Marketing Management,B.Com,UG,2,3,100
+S9009,Computer Applications,B.Com,UG,2,3,100
+S9010,Corporate Accounting,B.Com,UG,3,4,100
+S9011,Income Tax - I,B.Com,UG,3,4,100
+S9012,Banking Theory,B.Com,UG,3,3,100
+S9013,Entrepreneurship,B.Com,UG,3,3,100
+S9014,Indian Financial System,B.Com,UG,3,3,100
+S9015,Income Tax - II,B.Com,UG,4,3,100
+S9016,Auditing,B.Com,UG,4,4,100
+S9017,Financial Management,B.Com,UG,4,3,100
+S9018,Research Methodology,B.Com,UG,4,4,100
+S9019,E-Commerce,B.Com,UG,4,4,100
+S9020,Management Accounting,B.Com,UG,5,3,100
+S9021,Investment Analysis,B.Com,UG,5,3,100
+S9022,GST & Customs,B.Com,UG,5,3,100
+S9023,Advanced Corporate Accounting,B.Com,UG,5,4,100
+S9024,Business Ethics,B.Com,UG,5,3,100
+S9025,International Business,B.Com,UG,6,4,100
+S9026,Strategic Management,B.Com,UG,6,4,100
+S9027,Portfolio Management,B.Com,UG,6,3,100
+S9028,Export Management,B.Com,UG,6,3,100
+S9029,FinTech Basics,B.Com,UG,6,3,100
+S9030,Project Submission,B.Com,UG,6,4,100
+S9031,Viva Voce,B.Com,UG,6,3,100
+S9032,Principles of Management,BBA,UG,1,4,100
+S9033,Business Communication,BBA,UG,1,3,100
+S9034,Business Mathematics,BBA,UG,1,3,100
+S9035,Micro Economics,BBA,UG,1,4,100
+S9036,Environmental Studies,BBA,UG,1,4,100
+S9037,Organizational Behaviour,BBA,UG,2,4,100
+S9038,Business Statistics,BBA,UG,2,4,100
+S9039,Financial Accounting,BBA,UG,2,3,100
+S9040,Macro Economics,BBA,UG,2,3,100
+S9041,Managerial Skills,BBA,UG,2,4,100
+S9042,Operations Management,BBA,UG,3,4,100
+S9043,Marketing Management,BBA,UG,3,4,100
+S9044,HR Management,BBA,UG,3,3,100
+S9045,Research Methodology,BBA,UG,3,4,100
+S9046,Business Law,BBA,UG,3,4,100
+S9047,Financial Management,BBA,UG,4,4,100
+S9048,Materials Management,BBA,UG,4,4,100
+S9049,MIS,BBA,UG,4,3,100
+S9050,Entrepreneurship,BBA,UG,4,4,100
+S9051,Business Ethics,BBA,UG,4,3,100
+S9052,International Business,BBA,UG,5,4,100
+S9053,Strategic Management,BBA,UG,5,4,100
+S9054,Consumer Behaviour,BBA,UG,5,4,100
+S9055,Project Management,BBA,UG,5,3,100
+S9056,Investment Management,BBA,UG,5,4,100
+S9057,Services Marketing,BBA,UG,6,4,100
+S9058,Retail Management,BBA,UG,6,4,100
+S9059,Leadership,BBA,UG,6,4,100
+S9060,Project Work,BBA,UG,6,3,100
+S9061,Digital Marketing,BBA,UG,6,4,100
+S9062,Project Submission,BBA,UG,6,4,100
+S9063,Viva Voce,BBA,UG,6,4,100
+S9064,C Programming,B.Sc Computer Science,UG,1,4,100
+S9065,Digital Electronics,B.Sc Computer Science,UG,1,3,100
+S9066,Discrete Maths,B.Sc Computer Science,UG,1,3,100
+S9067,Computer Fundamentals,B.Sc Computer Science,UG,1,3,100
+S9068,Environmental Studies,B.Sc Computer Science,UG,1,3,100
+S9069,Data Structures,B.Sc Computer Science,UG,2,4,100
+S9070,Operating Systems,B.Sc Computer Science,UG,2,4,100
+S9071,OOP in C++,B.Sc Computer Science,UG,2,3,100
+S9072,Statistics for CS,B.Sc Computer Science,UG,2,3,100
+S9073,Communication Skills,B.Sc Computer Science,UG,2,4,100
+S9074,DBMS,B.Sc Computer Science,UG,3,4,100
+S9075,Computer Networks,B.Sc Computer Science,UG,3,4,100
+S9076,Java Programming,B.Sc Computer Science,UG,3,3,100
+S9077,Software Engineering,B.Sc Computer Science,UG,3,3,100
+S9078,Web Programming,B.Sc Computer Science,UG,3,3,100
+S9079,Python Programming,B.Sc Computer Science,UG,4,4,100
+S9080,Mobile App Dev,B.Sc Computer Science,UG,4,4,100
+S9081,Data Mining,B.Sc Computer Science,UG,4,3,100
+S9082,Computer Graphics,B.Sc Computer Science,UG,4,3,100
+S9083,Microprocessors,B.Sc Computer Science,UG,4,4,100
+S9084,Cloud Computing,B.Sc Computer Science,UG,5,3,100
+S9085,Machine Learning,B.Sc Computer Science,UG,5,4,100
+S9086,Info Security,B.Sc Computer Science,UG,5,4,100
+S9087,Big Data Analytics,B.Sc Computer Science,UG,5,4,100
+S9088,Project Phase I,B.Sc Computer Science,UG,5,3,100
+S9089,Deep Learning,B.Sc Computer Science,UG,6,4,100
+S9090,IoT Fundamentals,B.Sc Computer Science,UG,6,3,100
+S9091,DevOps Basics,B.Sc Computer Science,UG,6,3,100
+S9092,Project Phase II,B.Sc Computer Science,UG,6,4,100
+S9093,Ethics in Tech,B.Sc Computer Science,UG,6,3,100
+S9094,Project Submission,B.Sc Computer Science,UG,6,4,100
+S9095,Viva Voce,B.Sc Computer Science,UG,6,4,100
+S9096,Probability Theory,B.Sc Statistics,UG,1,3,100
+S9097,Calculus,B.Sc Statistics,UG,1,4,100
+S9098,Statistical Methods,B.Sc Statistics,UG,1,4,100
+S9099,Computer Fundamentals,B.Sc Statistics,UG,1,4,100
+S9100,Environmental Studies,B.Sc Statistics,UG,1,4,100
+S9101,Linear Algebra,B.Sc Statistics,UG,2,4,100
+S9102,Sampling Techniques,B.Sc Statistics,UG,2,3,100
+S9103,R Programming,B.Sc Statistics,UG,2,3,100
+S9104,Numerical Methods,B.Sc Statistics,UG,2,4,100
+S9105,Communication Skills,B.Sc Statistics,UG,2,3,100
+S9106,Statistical Inference,B.Sc Statistics,UG,3,4,100
+S9107,Regression Analysis,B.Sc Statistics,UG,3,3,100
+S9108,Design of Experiments,B.Sc Statistics,UG,3,3,100
+S9109,Time Series,B.Sc Statistics,UG,3,3,100
+S9110,Operations Research,B.Sc Statistics,UG,3,3,100
+S9111,Multivariate Analysis,B.Sc Statistics,UG,4,4,100
+S9112,Stochastic Processes,B.Sc Statistics,UG,4,3,100
+S9113,Quality Control,B.Sc Statistics,UG,4,3,100
+S9114,Actuarial Stats,B.Sc Statistics,UG,4,4,100
+S9115,Research Methodology,B.Sc Statistics,UG,4,4,100
+S9116,Bayesian Stats,B.Sc Statistics,UG,5,3,100
+S9117,Non-parametric Methods,B.Sc Statistics,UG,5,3,100
+S9118,Data Mining,B.Sc Statistics,UG,5,3,100
+S9119,Project Work I,B.Sc Statistics,UG,5,4,100
+S9120,Biostatistics,B.Sc Statistics,UG,5,4,100
+S9121,Econometrics,B.Sc Statistics,UG,6,4,100
+S9122,Reliability Theory,B.Sc Statistics,UG,6,3,100
+S9123,Advanced Time Series,B.Sc Statistics,UG,6,4,100
+S9124,Project Work II,B.Sc Statistics,UG,6,3,100
+S9125,ML Applications,B.Sc Statistics,UG,6,4,100
+S9126,Project Submission,B.Sc Statistics,UG,6,4,100
+S9127,Viva Voce,B.Sc Statistics,UG,6,3,100
+S9128,Micro Economics,B.A Economics,UG,1,3,100
+S9129,Math for Economics,B.A Economics,UG,1,3,100
+S9130,Stats for Economics,B.A Economics,UG,1,4,100
+S9131,Indian Eco Dev,B.A Economics,UG,1,3,100
+S9132,Environmental Studies,B.A Economics,UG,1,4,100
+S9133,Macro Economics,B.A Economics,UG,2,4,100
+S9134,Money & Banking,B.A Economics,UG,2,4,100
+S9135,Public Finance,B.A Economics,UG,2,3,100
+S9136,Comp Apps,B.A Economics,UG,2,4,100
+S9137,Communication Skills,B.A Economics,UG,2,4,100
+S9138,International Economics,B.A Economics,UG,3,4,100
+S9139,Econometrics,B.A Economics,UG,3,3,100
+S9140,Development Eco,B.A Economics,UG,3,3,100
+S9141,Agri Economics,B.A Economics,UG,3,4,100
+S9142,Research Meth,B.A Economics,UG,3,4,100
+S9143,Env Economics,B.A Economics,UG,4,4,100
+S9144,Labour Economics,B.A Economics,UG,4,4,100
+S9145,Ind Econ,B.A Economics,UG,4,4,100
+S9146,Financial Econ,B.A Economics,UG,4,4,100
+S9147,Project I,B.A Economics,UG,4,3,100
+S9148,Health Economics,B.A Economics,UG,5,3,100
+S9149,Urban Eco,B.A Economics,UG,5,4,100
+S9150,Welfare Econ,B.A Economics,UG,5,3,100
+S9151,Project II,B.A Economics,UG,5,4,100
+S9152,Behavioural Econ,B.A Economics,UG,5,3,100
+S9153,Tourism Economics,B.A Economics,UG,6,3,100
+S9154,Gender Eco,B.A Economics,UG,6,3,100
+S9155,Energy Econ,B.A Economics,UG,6,4,100
+S9156,Internship,B.A Economics,UG,6,3,100
+S9157,Data Analytics,B.A Economics,UG,6,4,100
+S9158,Project Submission,B.A Economics,UG,6,3,100
+S9159,Viva Voce,B.A Economics,UG,6,3,100
+S9160,Programming in C,BCA,UG,1,4,100
+S9161,Digital Fundamentals,BCA,UG,1,3,100
+S9162,Math I,BCA,UG,1,4,100
+S9163,Office Automation,BCA,UG,1,3,100
+S9164,Environmental Studies,BCA,UG,1,3,100
+S9165,Data Structures,BCA,UG,2,3,100
+S9166,Computer Org,BCA,UG,2,4,100
+S9167,Math II,BCA,UG,2,3,100
+S9168,OOP with C++,BCA,UG,2,4,100
+S9169,Comm Skills,BCA,UG,2,4,100
+S9170,DBMS,BCA,UG,3,3,100
+S9171,Operating Systems,BCA,UG,3,3,100
+S9172,Java Programming,BCA,UG,3,3,100
+S9173,Networks,BCA,UG,3,4,100
+S9174,Web Programming,BCA,UG,3,4,100
+S9175,Python Programming,BCA,UG,4,3,100
+S9176,Software Eng,BCA,UG,4,4,100
+S9177,Data Mining,BCA,UG,4,3,100
+S9178,Mobile Computing,BCA,UG,4,3,100
+S9179,Cloud Fundamentals,BCA,UG,4,4,100
+S9180,ML Basics,BCA,UG,5,3,100
+S9181,Info Security,BCA,UG,5,4,100
+S9182,Big Data,BCA,UG,5,4,100
+S9183,Project I,BCA,UG,5,4,100
+S9184,UI/UX Basics,BCA,UG,5,3,100
+S9185,IoT,BCA,UG,6,4,100
+S9186,DevOps,BCA,UG,6,3,100
+S9187,Advanced Web,BCA,UG,6,4,100
+S9188,Project II,BCA,UG,6,4,100
+S9189,Data Visualization,BCA,UG,6,3,100
+S9190,Project Submission,BCA,UG,6,3,100
+S9191,Viva Voce,BCA,UG,6,3,100
+S9192,Adv Financial Accounting,M.Com,PG,1,4,100
+S9193,Business Environment,M.Com,PG,1,4,100
+S9194,Research Methodology,M.Com,PG,1,4,100
+S9195,Cost Accounting,M.Com,PG,1,5,100
+S9196,Taxation I,M.Com,PG,1,5,100
+S9197,Corporate Law,M.Com,PG,2,4,100
+S9198,Management Accounting,M.Com,PG,2,5,100
+S9199,Intl Finance,M.Com,PG,2,5,100
+S9200,Taxation II,M.Com,PG,2,5,100
+S9201,Marketing Management,M.Com,PG,2,5,100
+S9202,Strategic Management,M.Com,PG,3,5,100
+S9203,Risk Management,M.Com,PG,3,5,100
+S9204,Financial Markets,M.Com,PG,3,4,100
+S9205,Project Work I,M.Com,PG,3,4,100
+S9206,Business Ethics,M.Com,PG,3,4,100
+S9207,Advanced Taxation,M.Com,PG,4,4,100
+S9208,E-Commerce,M.Com,PG,4,4,100
+S9209,Project Work II,M.Com,PG,4,4,100
+S9210,FinTech Apps,M.Com,PG,4,4,100
+S9211,Seminar,M.Com,PG,4,4,100
+S9212,Project Submission,M.Com,PG,4,5,100
+S9213,Viva Voce,M.Com,PG,4,5,100
+S9214,Adv C Programming,M.Sc Computer Science,PG,1,5,100
+S9215,OS Internals,M.Sc Computer Science,PG,1,5,100
+S9216,DB Systems,M.Sc Computer Science,PG,1,5,100
+S9217,Computer Arch,M.Sc Computer Science,PG,1,5,100
+S9218,Env Studies,M.Sc Computer Science,PG,1,5,100
+S9219,Machine Learning,M.Sc Computer Science,PG,2,4,100
+S9220,Data Mining,M.Sc Computer Science,PG,2,4,100
+S9221,Distributed Systems,M.Sc Computer Science,PG,2,4,100
+S9222,Software Quality,M.Sc Computer Science,PG,2,5,100
+S9223,Comm Skills,M.Sc Computer Science,PG,2,5,100
+S9224,Cloud Computing,M.Sc Computer Science,PG,3,5,100
+S9225,Big Data,M.Sc Computer Science,PG,3,4,100
+S9226,Network Security,M.Sc Computer Science,PG,3,5,100
+S9227,UI/UX Design,M.Sc Computer Science,PG,3,5,100
+S9228,Project I,M.Sc Computer Science,PG,3,4,100
+S9229,AI Technologies,M.Sc Computer Science,PG,4,5,100
+S9230,Blockchain,M.Sc Computer Science,PG,4,5,100
+S9231,Project II,M.Sc Computer Science,PG,4,5,100
+S9232,Seminar,M.Sc Computer Science,PG,4,4,100
+S9233,Ethics,M.Sc Computer Science,PG,4,4,100
+S9234,Project Submission,M.Sc Computer Science,PG,4,4,100
+S9235,Viva Voce,M.Sc Computer Science,PG,4,4,100

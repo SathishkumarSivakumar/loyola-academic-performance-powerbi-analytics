@@ -1,0 +1,252 @@
+================================================================================
+LOYOLA COLLEGE TN - 24K POWER BI DESKTOP DAX MEASURE LIBRARY
+AUTHOR: SATHISHKUMAR S (Power BI Developer & Business Intelligence Analyst)
+DATASET: Longitudinal UG/PG Academic Performance & Placement Repository
+================================================================================
+
+--------------------------------------------------------------------------------
+1. CORE ENROLLMENT & DEMOGRAPHIC MEASURES
+--------------------------------------------------------------------------------
+
+[Total Students] = 
+COUNTROWS('Dim_Students')
+
+[UG Students Count] = 
+CALCULATE(
+    COUNTROWS('Dim_Students'),
+    'Dim_Students'[DegreeType] = "UG"
+)
+
+[PG Students Count] = 
+CALCULATE(
+    COUNTROWS('Dim_Students'),
+    'Dim_Students'[DegreeType] = "PG"
+)
+
+[Average Student CGPA] = 
+AVERAGE('Dim_Students'[CGPA])
+
+[Gender Ratio % Female] = 
+VAR _Female = CALCULATE(COUNTROWS('Dim_Students'), 'Dim_Students'[Gender] = "F")
+VAR _Total = COUNTROWS('Dim_Students')
+RETURN
+    DIVIDE(_Female, _Total, 0)
+
+
+--------------------------------------------------------------------------------
+2. SEMESTER GPA & CREDITS ACCUMULATION MEASURES
+--------------------------------------------------------------------------------
+
+[Semester Grade Points Earned] = 
+SUMX(
+    'Fact_Scores',
+    VAR _Credit = RELATED('Dim_Subjects'[CreditPoints])
+    VAR _Grade = 'Fact_Scores'[GradeLetter]
+    VAR _Point = 
+        SWITCH(
+            _Grade,
+            "O", 10,
+            "A+", 9,
+            "A", 8,
+            "B+", 7,
+            "B", 6,
+            "C", 5,
+            0
+        )
+    RETURN
+        _Credit * _Point
+)
+
+[Total Credits Attempted] = 
+SUMX(
+    'Fact_Scores',
+    RELATED('Dim_Subjects'[CreditPoints])
+)
+
+[Semester GPA] = 
+DIVIDE(
+    [Semester Grade Points Earned],
+    [Total Credits Attempted],
+    BLANK()
+)
+
+[Credit Utilization Rate %] = 
+DIVIDE(
+    SUM('Fact_Credits'[CreditsEarned]),
+    SUM('Fact_Credits'[TotalCredits]),
+    0
+)
+
+
+--------------------------------------------------------------------------------
+3. PASSING RATES & ACADEMIC STANDARDS (UG >= 40 vs PG >= 50)
+--------------------------------------------------------------------------------
+
+[UG Exam Pass Rate %] = 
+VAR _UGPassed = 
+    CALCULATE(
+        COUNTROWS('Fact_Scores'),
+        'Fact_Scores'[DegreeType] = "UG",
+        'Fact_Scores'[FinalMarks] >= 40
+    )
+VAR _UGTotal = 
+    CALCULATE(
+        COUNTROWS('Fact_Scores'),
+        'Fact_Scores'[DegreeType] = "UG"
+    )
+RETURN
+    DIVIDE(_UGPassed, _UGTotal, 0)
+
+[PG Exam Pass Rate %] = 
+VAR _PGPassed = 
+    CALCULATE(
+        COUNTROWS('Fact_Scores'),
+        'Fact_Scores'[DegreeType] = "PG",
+        'Fact_Scores'[FinalMarks] >= 50
+    )
+VAR _PGTotal = 
+    CALCULATE(
+        COUNTROWS('Fact_Scores'),
+        'Fact_Scores'[DegreeType] = "PG"
+    )
+RETURN
+    DIVIDE(_PGPassed, _PGTotal, 0)
+
+[Overall Exam Pass Rate %] = 
+VAR _TotalPassed = 
+    CALCULATE(
+        COUNTROWS('Fact_Scores'),
+        OR(
+            'Fact_Scores'[DegreeType] = "UG" && 'Fact_Scores'[FinalMarks] >= 40,
+            'Fact_Scores'[DegreeType] = "PG" && 'Fact_Scores'[FinalMarks] >= 50
+        )
+    )
+VAR _TotalExams = COUNTROWS('Fact_Scores')
+RETURN
+    DIVIDE(_TotalPassed, _TotalExams, 0)
+
+
+--------------------------------------------------------------------------------
+4. ARREARS, RE-EXAMS & GRACE MARKS DIAGNOSTICS
+--------------------------------------------------------------------------------
+
+[Total Arrear Attempts] = 
+CALCULATE(
+    COUNTROWS('Fact_Scores'),
+    'Fact_Scores'[AttemptNo] > 1
+)
+
+[Average Attempts to Clear Subject] = 
+AVERAGEX(
+    FILTER('Fact_Scores', 'Fact_Scores'[AttemptNo] > 1),
+    'Fact_Scores'[AttemptNo]
+)
+
+[Grace Marks Beneficiaries Count] = 
+CALCULATE(
+    DISTINCTCOUNT('Fact_Scores'[RollNo]),
+    'Fact_Scores'[GraceMarks] > 0
+)
+
+[Average Grace Uplift Marks] = 
+CALCULATE(
+    AVERAGE('Fact_Scores'[GraceMarks]),
+    'Fact_Scores'[GraceMarks] > 0
+)
+
+
+--------------------------------------------------------------------------------
+5. AT-RISK EARLY WARNING & COUNSELLING MEASURES
+--------------------------------------------------------------------------------
+
+[At-Risk Students Count] = 
+CALCULATE(
+    COUNTROWS('Dim_Students'),
+    'Dim_Students'[BacklogCount] > 3,
+    'Dim_Students'[Attendance%] < 0.75
+)
+
+[Student Risk Level] = 
+VAR _Backlogs = SELECTEDVALUE('Dim_Students'[BacklogCount], 0)
+VAR _Att = SELECTEDVALUE('Dim_Students'[Attendance%], 1.0)
+RETURN
+    SWITCH(
+        TRUE(),
+        _Backlogs > 3 && _Att < 0.75, "CRITICAL RISK (Intervention Needed)",
+        _Backlogs > 3 || _Att < 0.75, "MODERATE CONCERN (Monitor Closely)",
+        "GOOD STANDING"
+    )
+
+[Average Attendance %] = 
+AVERAGE('Fact_Attendance'[Attendance%])
+
+[Attendance Shortage Count (<75%)] = 
+CALCULATE(
+    COUNTROWS('Fact_Attendance'),
+    'Fact_Attendance'[Attendance%] < 0.75
+)
+
+
+--------------------------------------------------------------------------------
+6. PLACEMENT READINESS & CORPORATE ROI
+--------------------------------------------------------------------------------
+
+[Placement Readiness Count] = 
+CALCULATE(
+    COUNTROWS('Dim_Students'),
+    'Dim_Students'[CGPA] >= 8.0,
+    'Dim_Students'[BacklogCount] = 0
+)
+
+[Total Placed Students] = 
+CALCULATE(
+    COUNTROWS('Dim_Students'),
+    'Dim_Students'[PlacementOfferFlag] = "1" || 'Dim_Students'[PlacementOfferFlag] = "TRUE" || 'Dim_Students'[PlacementOfferFlag] = "Yes"
+)
+
+[Placement Conversion Rate %] = 
+DIVIDE(
+    [Total Placed Students],
+    COUNTROWS('Dim_Students'),
+    0
+)
+
+[Highest CTC Package LPA] = 
+MAX('Dim_Students'[CTC_LPA])
+
+[Average CTC Package LPA] = 
+CALCULATE(
+    AVERAGE('Dim_Students'[CTC_LPA]),
+    'Dim_Students'[CTC_LPA] > 0
+)
+
+[Internship CGPA Uplift Advantage] = 
+VAR _WithIntern = 
+    CALCULATE(
+        AVERAGE('Dim_Students'[CGPA]),
+        'Dim_Students'[InternshipFlag] = "1" || 'Dim_Students'[InternshipFlag] = "Yes"
+    )
+VAR _WithoutIntern = 
+    CALCULATE(
+        AVERAGE('Dim_Students'[CGPA]),
+        'Dim_Students'[InternshipFlag] <> "1" && 'Dim_Students'[InternshipFlag] <> "Yes"
+    )
+RETURN
+    _WithIntern - _WithoutIntern
+
+
+--------------------------------------------------------------------------------
+7. VIVA & PROJECT EVALUATION METRICS
+--------------------------------------------------------------------------------
+
+[Average Viva Total Score] = 
+AVERAGE('Fact_ProjectViva'[TotalForViva])
+
+[Average Report Score] = 
+AVERAGE('Fact_ProjectViva'[ReportScore])
+
+[Average Presentation Score] = 
+AVERAGE('Fact_ProjectViva'[PresentationScore])
+
+[Average QA Score] = 
+AVERAGE('Fact_ProjectViva'[QAScore])

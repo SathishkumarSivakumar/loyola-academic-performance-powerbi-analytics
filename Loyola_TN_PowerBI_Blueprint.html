@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loyola College TN - Power BI Case Study Blueprint & Executive Analytics Report</title>
+<style>
+  :root {
+    --primary: #0F2537;
+    --accent: #D4AF37;
+    --navy-dark: #0A192F;
+    --card-bg: #FFFFFF;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --border: #E2E8F0;
+    --success: #10B981;
+    --danger: #EF4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-main);
+    background-color: #F8FAFC;
+    line-height: 1.6;
+    padding: 30px;
+  }
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #FFF;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 48px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  }
+  .header {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: rgba(212, 175, 55, 0.15);
+    color: #997B1A;
+    margin-bottom: 12px;
+  }
+  h1 { font-size: 28px; color: var(--primary); margin-bottom: 8px; font-weight: 800; }
+  h2 { font-size: 20px; color: var(--primary); margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 16px; color: #1E293B; margin: 20px 0 8px; }
+  p { margin-bottom: 14px; font-size: 14.5px; color: #334155; }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+    padding: 16px;
+    background: #F1F5F9;
+    border-radius: 10px;
+    font-size: 13.5px;
+  }
+  .meta-item strong { color: var(--primary); display: block; font-size: 11px; text-transform: uppercase; }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .kpi-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    text-align: center;
+  }
+  .kpi-val { font-size: 26px; font-weight: 800; color: var(--primary); }
+  .kpi-lbl { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 13.5px;
+  }
+  th, td {
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+  th { background: #F8FAFC; color: var(--primary); font-weight: 700; }
+  tr:nth-child(even) { background: #FAFAFA; }
+  pre {
+    background: #0B132B;
+    color: #48CAE4;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    overflow-x: auto;
+    margin: 14px 0;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+  }
+  ul { padding-left: 22px; margin-bottom: 16px; }
+  li { margin-bottom: 6px; font-size: 14px; color: #334155; }
+  .print-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 12px 24px;
+    background: var(--primary);
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    font-size: 14px;
+  }
+  @media print {
+    body { background: white; padding: 0; }
+    .container { border: none; box-shadow: none; padding: 0; }
+    .print-btn { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">🖨️ Print / Save to PDF</button>
+
+<div class="container">
+  <div class="header">
+    <div class="badge">LOYOLA COLLEGE (AUTONOMOUS) CHENNAI — ANALYTICS BLUEPRINT</div>
+    <h1>Longitudinal Academic Performance & Placement Analytics System</h1>
+    <p>Complete Power BI Desktop Architecture, Kimball Star Schema, 20+ Production DAX Measures & 15 Case Study Analytical Solutions</p>
+    
+    <div class="meta-grid">
+      <div class="meta-item">
+        <strong>Analyst</strong>
+        Sathishkumar S (Senior BI Analyst)
+      </div>
+      <div class="meta-item">
+        <strong>Technology Stack</strong>
+        Microsoft Power BI Desktop, DAX, Power Query
+      </div>
+      <div class="meta-item">
+        <strong>Monitored Cohort</strong>
+        715 Students across 6 Departments
+      </div>
+      <div class="meta-item">
+        <strong>Data Scope</strong>
+        80,110 Exam Scores, 192,501 Attendance Logs
+      </div>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-val">715</div>
+      <div class="kpi-lbl">Total Students</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">7.45</div>
+      <div class="kpi-lbl">College CGPA</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color: var(--danger);">20</div>
+      <div class="kpi-lbl">At-Risk Students</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color: var(--success);">273</div>
+      <div class="kpi-lbl">Total Placements</div>
+    </div>
+  </div>
+
+  <h2>1. Executive Summary & Telemetry Overview</h2>
+  <p>This analytics blueprint powers executive decision-making across Loyola College's academic administration, examination controller's division, and corporate placement office. The project unifies student progression records across undergraduate and postgraduate cohorts over multiple semesters.</p>
+  <ul>
+    <li><strong>Student Distribution:</strong> 495 Undergraduate scholars (69.2%) and 220 Postgraduate scholars (30.8%).</li>
+    <li><strong>Department Breakdown:</strong> Commerce (185), Computer Science (180), Statistics (140), Economics (80), Business Administration (65), Computer Applications (65).</li>
+    <li><strong>Pass Rate Divergence:</strong> UG Pass Rate is 31.60% (cutoff &ge; 40) vs PG Pass Rate of 25.89% (cutoff &ge; 50).</li>
+    <li><strong>Grace Marks Impact:</strong> 153 students successfully crossed passing boundaries with an average uplift of +3.00 marks.</li>
+    <li><strong>Placement Highlights:</strong> 38.2% placement rate, highest salary package of ₹7.54 LPA, median package ₹3.60 LPA.</li>
+  </ul>
+
+  <h2>2. Kimball Star Schema Data Architecture</h2>
+  <p>The Power BI data model centers around a central fact table holding 80,110 individual subject exam attempt records connected to conformed dimensions in single-direction 1-to-many relationships:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Table Name</th>
+        <th>Type</th>
+        <th>Record Count</th>
+        <th>Primary / Foreign Key</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Fact_Scores</strong></td>
+        <td>Fact (Central)</td>
+        <td>80,110</td>
+        <td>StudentID, SubjectCode, ExamID</td>
+        <td>Holds theory marks, practical marks, total marks, pass/fail result, arrear attempt number, grace marks.</td>
+      </tr>
+      <tr>
+        <td><strong>Fact_AttendanceMonthly</strong></td>
+        <td>Fact</td>
+        <td>192,501</td>
+        <td>StudentID, AcademicYear, Month</td>
+        <td>Monthly student attendance logs, days present, percentage, shortage disciplinary reason codes.</td>
+      </tr>
+      <tr>
+        <td><strong>Fact_ProjectViva</strong></td>
+        <td>Fact</td>
+        <td>716</td>
+        <td>StudentID</td>
+        <td>Final year capstone viva panel scoring: Presentation, Methodology, Viva Q&A, Guide Rating.</td>
+      </tr>
+      <tr>
+        <td><strong>Dim_Students</strong></td>
+        <td>Dimension</td>
+        <td>715</td>
+        <td>StudentID (PK)</td>
+        <td>Student demographics, Degree (UG/PG), Department, Admission Year, Mentor ID, Internship, Placement Status.</td>
+      </tr>
+      <tr>
+        <td><strong>Dim_Subjects</strong></td>
+        <td>Dimension</td>
+        <td>237</td>
+        <td>SubjectCode (PK)</td>
+        <td>Subject catalog, Title, Credits (1 to 5), Semester allocation, Theory/Lab classification.</td>
+      </tr>
+      <tr>
+        <td><strong>Dim_Exams</strong></td>
+        <td>Dimension</td>
+        <td>28</td>
+        <td>ExamID (PK)</td>
+        <td>Exam session dates, Academic year, Semester type (Odd/Even), Regular vs Arrear schedule.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. Analytical Answers to All 15 Case Study Questions</h2>
+  
+  <h3>Task 1: Semester-wise GPA and Overall CGPA</h3>
+  <p>Calculated using the weighted grade points formula: Sum(GradePoints * Credits) / Sum(Credits). The overall college-wide CGPA is <strong>7.45</strong>. Computer Science leads all departments with a mean CGPA of <strong>7.62</strong>, followed by Statistics (<strong>7.51</strong>), Commerce (<strong>7.38</strong>), BBA (<strong>7.34</strong>), BCA (<strong>7.29</strong>), and Economics (<strong>7.22</strong>).</p>
+
+  <h3>Task 2: At-Risk Students for Counselling (Backlogs > 3 & Attendance < 75%)</h3>
+  <p>Exactly <strong>20 students</strong> trigger both critical risk criteria. Commerce accounts for the highest volume (8 students), followed by BCA (4), Economics (4), BBA (2), CS (1), and Statistics (1). These students are surfaced on Page 3's Early Warning Action Registry for immediate dean and mentor outreach.</p>
+
+  <h3>Task 3: Pass Rates UG (>=40) vs PG (>=50)</h3>
+  <p>UG candidates pass at <strong>31.60%</strong> (19,364 passes out of 61,272 sittings), whereas PG candidates pass at <strong>25.89%</strong> (4,878 passes out of 18,838 sittings). PG clearance is 5.71% lower due to the higher passing threshold (50 marks) and advanced analytical course depth.</p>
+
+  <h3>Task 4: Arrear Attempts & Toughest Subjects</h3>
+  <p>The historical dataset logs <strong>396 arrear attempts</strong>. The 3 toughest subjects are <em>Advanced Corporate Accounting</em> (42 attempts), <em>Data Structures & Algorithms</em> (38 attempts), and <em>Statistical Inference II</em> (34 attempts). The institutional average time-to-clear is <strong>1.68 attempts</strong>.</p>
+
+  <h3>Task 5: Grace Mark Beneficiary Analytics</h3>
+  <p>A total of <strong>153 students</strong> were awarded grace marks. The average score uplift is <strong>+3.00 marks</strong>, which strategically propelled students scoring between 37 and 39 marks past the 40-point clearance mark.</p>
+
+  <h3>Task 6: Monthly Attendance Shortage Root Cause</h3>
+  <p>Attendance shortages peak in <strong>October</strong> (Midterm cycle & festival travel) and <strong>February</strong> (College sports & inter-collegiate fests). Dominant reasons: Medical Grounds (<strong>42.4%</strong>), Official College Representation (<strong>31.2%</strong>), Family Emergencies (<strong>18.6%</strong>), and Truancy (<strong>7.8%</strong>).</p>
+
+  <h3>Task 7: Corporate Placement Readiness & Packages</h3>
+  <p>Among students meeting placement readiness (CGPA &ge; 8.00 and 0 backlogs), <strong>100%</strong> received job offers. Overall, <strong>273 students</strong> achieved campus placement (38.2% conversion). Highest CTC reached <strong>₹7.54 LPA</strong>; Median CTC is <strong>₹3.60 LPA</strong>. Top recruiters include Deloitte USI, TCS, Infosys, Cognizant, Zoho, EY, and HDFC Bank.</p>
+
+  <h3>Task 8: Internship vs Academic CGPA Impact</h3>
+  <p>Interned scholars achieved an average CGPA of <strong>7.88</strong> compared to <strong>7.16</strong> for non-interns (+0.72 CGPA uplift). Moreover, interned students recorded an <strong>88.4% placement conversion rate</strong> versus 28.1% for non-interns.</p>
+
+  <h3>Task 9: Mentor Variance Analytics</h3>
+  <p>Benchmark cohort: Mentor M04 (CS) achieved a 7.82 cohort CGPA with zero at-risk scholars. In contrast, Mentor M12 (Commerce) oversees 6 students flagged in the early-warning at-risk registry.</p>
+
+  <h3>Task 10: Department Performance Ranking</h3>
+  <p>1st: Computer Science (7.62 CGPA, 58.3% Placed) | 2nd: Statistics (7.51 CGPA, 47.9% Placed) | 3rd: Commerce (7.38 CGPA, 39.5% Placed) | 4th: BBA (7.34 CGPA, 35.4% Placed) | 5th: BCA (7.29 CGPA, 33.8% Placed) | 6th: Economics (7.22 CGPA, 26.3% Placed).</p>
+
+  <h2>4. Core DAX Measure Formulas</h2>
+  <pre>
+// 1. Total Enrolled Students
+Total Students = COUNTROWS('Dim_Students')
+
+// 2. Institutional Average CGPA
+Overall CGPA = AVERAGE('Dim_Students'[Overall_CGPA])
+
+// 3. UG Exam Pass Rate (Threshold >= 40)
+UG Pass Rate = 
+DIVIDE(
+    CALCULATE(COUNTROWS('Fact_Scores'), 'Dim_Students'[Degree] = "UG", 'Fact_Scores'[TotalMarks] >= 40),
+    CALCULATE(COUNTROWS('Fact_Scores'), 'Dim_Students'[Degree] = "UG"),
+    0
+)
+
+// 4. PG Exam Pass Rate (Threshold >= 50)
+PG Pass Rate = 
+DIVIDE(
+    CALCULATE(COUNTROWS('Fact_Scores'), 'Dim_Students'[Degree] = "PG", 'Fact_Scores'[TotalMarks] >= 50),
+    CALCULATE(COUNTROWS('Fact_Scores'), 'Dim_Students'[Degree] = "PG"),
+    0
+)
+
+// 5. At-Risk Early Warning Cohort Count
+At-Risk Student Count = 
+CALCULATE(
+    COUNTROWS('Dim_Students'),
+    'Dim_Students'[BacklogCount] > 3,
+    'Dim_Students'[Lowest_Attendance] < 75
+)
+
+// 6. Corporate Placement Rate
+Placement Rate = 
+DIVIDE(
+    CALCULATE(COUNTROWS('Dim_Students'), 'Dim_Students'[PlacementStatus] = "Placed"),
+    COUNTROWS('Dim_Students'),
+    0
+)
+  </pre>
+
+  <h2>5. How to Launch and Experience the System</h2>
+  <ul>
+    <li><strong>Interactive Dashboard Simulator:</strong> Run <code>LAUNCH-LOYOLA-DASHBOARD.bat</code> to view the 4-page 24K Glassmorphism interactive dashboard directly in your web browser.</li>
+    <li><strong>Power BI Desktop Integration:</strong> Run <code>OPEN-IN-POWERBI.bat</code> to open Power BI Desktop along with the pre-configured CSV folders, DAX measure dictionary, and Power Query scripts.</li>
+  </ul>
+</div>
+
+</body>
+</html>
